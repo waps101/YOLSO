@@ -19,6 +19,23 @@ CODE CLEANING AND UPLOAD IN PROGRESS
 
 ### Training data format
 
+    <base_folder>
+    pointclasses.txt     # list of bounding box class names
+    regionclasses.txt    # list of region class names
+    |-- tiles
+        |-- 000.tif      # map or document tiles as images
+        |-- 001.tif
+        ...
+    |-- points
+        |-- 000.txt      # bounding box centre and symbol class annotations
+        |-- 001.txt
+        ...
+    |-- regions
+        |-- 000.txt      # region polygon and class annotations
+        |-- 001.txt
+        ...
+
+
 ### Training a model
 
 ### Running inference with a model
