@@ -1,6 +1,6 @@
-# [You Only Look for a Symbol Once: An Object Detector for Symbols and Regions in Documents](https://openaccess.thecvf.com/content_CVPR_2020/papers/Smith_A_Morphable_Face_Albedo_Model_CVPR_2020_paper.pdf](https://eprints.whiterose.ac.uk/198859/1/_ICDAR_YOLSO.pdf)
+# [You Only Look for a Symbol Once: An Object Detector for Symbols and Regions in Documents](https://eprints.whiterose.ac.uk/198859/1/_ICDAR_YOLSO.pdf)
 
- [William A. P. Smith](https://www-users.cs.york.ac.uk/wsmith) and [Toby Pillatt](https://www.york.ac.uk/archaeology/people/toby-pillatt/)
+ [William A. P. Smith](https://www-users.cs.york.ac.uk/wsmith) and [Toby Pillatt](https://www.york.ac.uk/archaeology/people/toby-pillatt)
  <br/>
  University of York, UK
  <br/>
