@@ -19,6 +19,8 @@ CODE CLEANING AND UPLOAD IN PROGRESS
 
 ### Training data format
 
+In order to train a YOLSO model, you need a set of images (e.g. map tiles) annotated with bounding boxes with classes and/or polygonal regions with classes. The method predicts only bounding box centres - not width and height. So you only need centre annotations. A training dataset should be structured as follows:
+
     <base_folder>
     pointclasses.txt     # list of bounding box class names
     regionclasses.txt    # list of region class names
@@ -37,6 +39,8 @@ CODE CLEANING AND UPLOAD IN PROGRESS
 
 
 ### Training a model
+
+You should adjust the `--cellres` parameter to be suitable for your bounding box dimensions. A good guide would be to choose the power of 2 smaller than your bounding box dimension. e.g. in the paper, our tree symbols have bounding boxes of 48 pixels, so we use `--cellres 32`.
 
 ### Running inference with a model
 
