@@ -40,7 +40,34 @@ In order to train a YOLSO model, you need a set of images (e.g. map tiles) annot
 
 ### Training a model
 
-You should adjust the `--cellres` parameter to be suitable for your bounding box dimensions. A good guide would be to choose the power of 2 smaller than your bounding box dimension. e.g. in the paper, our tree symbols have bounding boxes of 48 pixels, so we use `--cellres 32`.
+```
+    usage: YOLSO_train.py [-h] [-g GRIDSIZE] [-c CELLRES] [-t TRAINPROP] [-b BATCHSIZE] [-l LR] [-r RESUME] [-e NUMEPOCHS] [-R]
+                      [-s IMSIZE] [-f BASEFOLDER]
+
+    Train a YOLSO model
+    
+    options:
+      -h, --help            show this help message and exit
+      -g GRIDSIZE, --gridsize GRIDSIZE
+                            number of grid cells along each side of grid for training crop (default: 16)
+      -c CELLRES, --cellres CELLRES
+                            number of pixels along each side of a grid cell (default: 32)
+      -t TRAINPROP, --trainprop TRAINPROP
+                            proportion of dataset to use for training (default: 0.9)
+      -b BATCHSIZE, --batchsize BATCHSIZE
+                            batch size (default: 16)
+      -l LR, --lr LR        learning rate (default: 0.001)
+      -r RESUME, --resume RESUME
+                            checkpoint number (default: 0)
+      -e NUMEPOCHS, --numepochs NUMEPOCHS
+                            number of epochs (default: 1000)
+      -R, --doresize        whether to resize all training images to specified size (default: False)
+      -s IMSIZE, --imsize IMSIZE
+                            whether to resize all training images to specified size (default: 4724)
+      -f BASEFOLDER, --basefolder BASEFOLDER
+                            train data folder (default: datasets/OS_trees/)
+    
+    You should adjust the `--cellres` parameter to be suitable for your bounding box dimensions. A good guide would be to choose the power of 2 smaller than your bounding box dimension. e.g. in the paper, our tree symbols have bounding boxes of 48 pixels, so we use `--cellres 32`.
 
 ### Running inference with a model
 
