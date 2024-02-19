@@ -29,16 +29,21 @@ In order to train a YOLSO model, you need a set of images (e.g. map tiles) annot
         |-- 001.tif
         ...
     |-- points
-        |-- 000.txt      # bounding box centre and symbol class annotations
-        |-- 001.txt
+        |-- 000.csv      # bounding box centre and symbol class annotations
+        |-- 001.csv
         ...
     |-- regions
         |-- 000.txt      # region polygon and class annotations
         |-- 001.txt
         ...
 
+The files in tiles, points and regions need not be named as consecutive numbers but the corresponding filenames should match across the three folders. 
+
+The bounding box annotations should be structured as a csv file in which each row is a bounding box and only the first three elements are used. This are in the format: xpix, ypix, classname. Here, xpix and ypix are the coordinates of the centre of the bounding box (in pixels) and classname is a string that appears in pointclasses.txt.
 
 ### Training a model
+
+The script `YOLSO_train.py` can be used to train a YOLSO model. There are various command line options available:
 
 ```
 usage: YOLSO_train.py [-h] [-g GRIDSIZE] [-c CELLRES] [-t TRAINPROP] [-b BATCHSIZE] [-l LR] [-r RESUME] [-e NUMEPOCHS] [-R]
@@ -68,7 +73,7 @@ options:
                         train data folder (default: datasets/OS_trees/)
 ```
 
-You should adjust the `--cellres` parameter to be suitable for your bounding box dimensions. A good guide would be to choose the power of 2 smaller than your bounding box dimension. e.g. in the paper, our tree symbols have bounding boxes of 48 pixels, so we use `--cellres 32`.
+You should adjust the `--cellres` parameter to be suitable for your bounding box dimensions. A good guide would be to choose the power of 2 smaller than your bounding box dimension. e.g. in the paper, our tree symbols have bounding boxes of 48 pixels, so we use `--cellres 32`. 
 
 ### Running inference with a model
 
