@@ -1,0 +1,5 @@
+coniferous
+deciduous
+mixed
+orchard
+nursery
