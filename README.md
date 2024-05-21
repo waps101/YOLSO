@@ -15,7 +15,21 @@ We present YOLSO, a single stage object detector specialised for the detection o
 
 ## PyTorch implementation
 
-CODE CLEANING AND UPLOAD IN PROGRESS
+### Requirements
+
+```
+pip install -r requirements.txt
+```
+
+### Quick start
+
+You can run a trained model on three test images as follows:
+
+```
+python YOLSO_test.py -R
+```
+
+Output for the three images will be written to `datasets/test/results`. For each image, bounding boxes will be written to a text file and the upsampled regions to a TIFF raster (files ending `_raster`). A human interpretable TIFF image will also be created which shows the bounding boxes overlaid and the raw, coarse region segmentations.
 
 ### Training data format
 
@@ -40,6 +54,10 @@ In order to train a YOLSO model, you need a set of images (e.g. map tiles) annot
 The files in tiles, points and regions need not be named as consecutive numbers but the corresponding filenames should match across the three folders. 
 
 The bounding box annotations should be structured as a csv file in which each row is a bounding box and only the first three elements are used. This are in the format: xpix, ypix, classname. Here, xpix and ypix are the coordinates of the centre of the bounding box (in pixels) and classname is a string that appears in pointclasses.txt.
+
+The region annotations should be text files with one line per region. Each line is a python list, starting with a string containing the region class name, followed by a sequence of point coordinate tuples normalised to 0..1. The last point should close the polygon.
+
+For examples, see `datasets/OS_trees`.
 
 ### Training a model
 
@@ -73,13 +91,46 @@ options:
                         train data folder (default: datasets/OS_trees/)
 ```
 
-You should adjust the `--cellres` parameter to be suitable for your bounding box dimensions. A good guide would be to choose the power of 2 smaller than your bounding box dimension. e.g. in the paper, our tree symbols have bounding boxes of 48 pixels, so we use `--cellres 32`. 
+You should adjust the `--cellres` parameter to be suitable for your bounding box dimensions. A good guide would be to choose the power of 2 smaller than your bounding box dimension. e.g. in the paper, our tree symbols have bounding boxes of 48 pixels, so we use `--cellres 32`. All defaults are for the OS maps dataset.
 
 ### Running inference with a model
 
+The script `YOLSO_test.py` can be used to train a YOLSO model. There are various command line options available:
+
+```
+usage: YOLSO_test.py [-h] [-g GRIDSIZE] [-c CELLRES] [-R] [-s IMSIZE] [-p NPOINTCLASSES] [-r NREGIONCLASSES]
+                     [-b BASEFOLDER] [-i IMAGESFOLDER] [-o OUTPUTFOLDER] [-w WEIGHTSPATH] [-B BBOXWIDTH]
+
+Process a dataset using a trained YOLSO model
+
+options:
+  -h, --help            show this help message and exit
+  -g GRIDSIZE, --gridsize GRIDSIZE
+                        number of grid cells along each side of grid for training crop (default: 16)
+  -c CELLRES, --cellres CELLRES
+                        number of pixels along each side of a grid cell - must be power of 2 (default: 32)
+  -R, --doresize        whether to resize all training images to specified size (default: False)
+  -s IMSIZE, --imsize IMSIZE
+                        whether to resize all training images to specified size (default: 4724)
+  -p NPOINTCLASSES, --npointclasses NPOINTCLASSES
+                        number of point classes (default: 3)
+  -r NREGIONCLASSES, --nregionclasses NREGIONCLASSES
+                        number of region classes (default: 5)
+  -b BASEFOLDER, --basefolder BASEFOLDER
+                        test data path (default: datasets/test/)
+  -i IMAGESFOLDER, --imagesfolder IMAGESFOLDER
+                        test images folder (default: images/)
+  -o OUTPUTFOLDER, --outputfolder OUTPUTFOLDER
+                        test output folder (default: results/)
+  -w WEIGHTSPATH, --weightspath WEIGHTSPATH
+                        path to trained model weights (default: models/YOLSO_OS.pkl)
+  -B BBOXWIDTH, --bboxwidth BBOXWIDTH
+                        bounding box width (default: 48)
+```
+
 ## OS maps tree symbol dataset
 
-We provide annotations for first edition OS map tiles. We cannot provide the image tiles themselves, however researchers are able to download these. Instead we provide only the symbol and region annotations in the format described above.
+We provide annotations for first edition OS map tiles in `datasets/OS_trees`. We cannot provide the image tiles themselves, however researchers are able to download these from digimap. Instead we provide only the symbol and region annotations in the format described above.
 
 ## Citation
 
