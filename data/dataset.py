@@ -188,8 +188,8 @@ class TilesDataTest(Dataset):
         self.pad = pad
 
     def __getitem__(self, idx):
-        img = Image.open(self.fnames[idx])
-        h = img.size[0]
+        img = Image.open(self.fnames[idx]) # 2D if grayscale, 3D if colour
+        h = img.size[-2]
 
         # Check if we need to resize
         if self.doresize and (img.size[0] != self.imsize):
@@ -205,9 +205,8 @@ class TilesDataTest(Dataset):
 
         dim = gridsize*self.cellsize+self.pad
 
-        img = self.transform(img)
-        image = torch.ones(dim,dim)
-        image[int(self.pad/2):int(self.pad/2)+img.size[0],int(self.pad/2):int(self.pad/2)+img.size[0]]=img
-        img = image.unsqueeze(0)
+        img = self.transform(img) # Now either 1 x H x W or 3 x H x W
+        image = torch.ones(img.shape[0],dim,dim)
+        image[:,int(self.pad/2):int(self.pad/2)+img.shape[-2],int(self.pad/2):int(self.pad/2)+img.shape[-1]]=img
 
-        return img,self.image_files[idx],h,gridsize
+        return image,self.image_files[idx],h,gridsize
